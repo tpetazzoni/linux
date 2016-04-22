@@ -120,6 +120,10 @@ static int ahci_mvebu_probe(struct platform_device *pdev)
 
 		ahci_mvebu_mbus_config(hpriv, dram);
 		ahci_mvebu_regret_option(hpriv);
+	} else if (of_device_is_compatible(pdev->dev.of_node,
+					   "marvell,armada-8k-ahci")) {
+		hpriv->port_offset = 0x10000;
+		hpriv->port_length = 0x10000;
 	}
 
 	rc = ahci_platform_init_host(pdev, hpriv, &ahci_mvebu_port_info,
@@ -137,6 +141,7 @@ disable_resources:
 static const struct of_device_id ahci_mvebu_of_match[] = {
 	{ .compatible = "marvell,armada-380-ahci", },
 	{ .compatible = "marvell,armada-3700-ahci", },
+	{ .compatible = "marvell,armada-8k-ahci", },
 	{ },
 };
 MODULE_DEVICE_TABLE(of, ahci_mvebu_of_match);
