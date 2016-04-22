@@ -1664,10 +1664,11 @@ static int ahci_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
 
 	for (i = 0; i < host->n_ports; i++) {
 		struct ata_port *ap = host->ports[i];
+		unsigned int offset =
+			hpriv->port_offset + ap->port_no * hpriv->port_length;
 
 		ata_port_pbar_desc(ap, ahci_pci_bar, -1, "abar");
-		ata_port_pbar_desc(ap, ahci_pci_bar,
-				   0x100 + ap->port_no * 0x80, "port");
+		ata_port_pbar_desc(ap, ahci_pci_bar, offset, "port");
 
 		/* set enclosure management message type */
 		if (ap->flags & ATA_FLAG_EM)

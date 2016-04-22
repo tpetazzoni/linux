@@ -324,6 +324,9 @@ struct ahci_port_priv {
 	char			*irq_desc;	/* desc in /proc/interrupts */
 };
 
+#define AHCI_DEFAULT_PORT_OFFSET	0x100
+#define AHCI_DEFAULT_PORT_LENGTH	0x80
+
 struct ahci_host_priv {
 	/* Input fields */
 	unsigned int		flags;		/* AHCI_HFLAG_* */
@@ -331,6 +334,8 @@ struct ahci_host_priv {
 	u32			mask_port_map;	/* mask out particular bits */
 
 	void __iomem *		mmio;		/* bus-independent mem map */
+	u32			port_offset;	/* offset of ports from base */
+	u32			port_length;	/* length of per-port area */
 	u32			cap;		/* cap to use */
 	u32			cap2;		/* cap2 to use */
 	u32			version;	/* cached version */
@@ -422,7 +427,7 @@ static inline void __iomem *__ahci_port_base(struct ata_host *host,
 	struct ahci_host_priv *hpriv = host->private_data;
 	void __iomem *mmio = hpriv->mmio;
 
-	return mmio + 0x100 + (port_no * 0x80);
+	return mmio + hpriv->port_offset + (port_no * hpriv->port_length);
 }
 
 static inline void __iomem *ahci_port_base(struct ata_port *ap)

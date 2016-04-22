@@ -371,6 +371,9 @@ struct ahci_host_priv *ahci_platform_get_resources(struct platform_device *pdev)
 		goto err_out;
 	}
 
+	hpriv->port_offset = AHCI_DEFAULT_PORT_OFFSET;
+	hpriv->port_length = AHCI_DEFAULT_PORT_LENGTH;
+
 	for (i = 0; i < AHCI_MAX_CLKS; i++) {
 		/*
 		 * For now we must use clk_get(dev, NULL) for the first clock,
@@ -557,10 +560,12 @@ int ahci_platform_init_host(struct platform_device *pdev,
 
 	for (i = 0; i < host->n_ports; i++) {
 		struct ata_port *ap = host->ports[i];
+		unsigned int offset =
+			hpriv->port_offset + ap->port_no * hpriv->port_length;
 
 		ata_port_desc(ap, "mmio %pR",
 			      platform_get_resource(pdev, IORESOURCE_MEM, 0));
-		ata_port_desc(ap, "port 0x%x", 0x100 + ap->port_no * 0x80);
+		ata_port_desc(ap, "port 0x%x", offset);
 
 		/* set enclosure management message type */
 		if (ap->flags & ATA_FLAG_EM)
