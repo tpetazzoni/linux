@@ -476,7 +476,8 @@ static int acard_ahci_init_one(struct pci_dev *pdev, const struct pci_device_id 
 
 		ata_port_pbar_desc(ap, AHCI_PCI_BAR, -1, "abar");
 		ata_port_pbar_desc(ap, AHCI_PCI_BAR,
-				   0x100 + ap->port_no * 0x80, "port");
+				   hpriv->port_offset +
+				   ap->port_no * hpriv->port_length, "port");
 
 		/* set initial link pm policy */
 		/*
