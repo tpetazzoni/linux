@@ -79,8 +79,6 @@
 #define PORT_SCTL_SPD_GEN1	(0x1 << 4)
 #define PORT_SCTL_IPM		(0x3 << 8)
 
-#define PORT_BASE	0x100
-#define PORT_OFFSET	0x80
 #define NR_PORTS	2
 #define DRV_NAME	"ahci-ceva"
 #define CEVA_FLAG_BROKEN_GEN2	1
@@ -154,7 +152,8 @@ static void ahci_ceva_setup(struct ahci_host_priv *hpriv)
 		tmp = PORT_SCTL_SPD_GEN2 | PORT_SCTL_IPM;
 		if (cevapriv->flags & CEVA_FLAG_BROKEN_GEN2)
 			tmp = PORT_SCTL_SPD_GEN1 | PORT_SCTL_IPM;
-		writel(tmp, mmio + PORT_SCR_CTL + PORT_BASE + PORT_OFFSET * i);
+		writel(tmp, mmio + PORT_SCR_CTL + hpriv->port_offset +
+		       hpriv->port_length * i);
 	}
 }
 
