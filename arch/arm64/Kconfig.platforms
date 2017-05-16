@@ -106,6 +106,8 @@ config ARCH_MVEBU
 	select ARMADA_AP806_SYSCON
 	select ARMADA_CP110_SYSCON
 	select ARMADA_37XX_CLK
+	select MVEBU_GICP
+	select MVEBU_ICU
 	select MVEBU_ODMI
 	select MVEBU_PIC
 	help
