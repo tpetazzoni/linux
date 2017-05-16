@@ -915,7 +915,7 @@ mv64xxx_i2c_probe(struct platform_device *pd)
 			goto exit_clk;
 	}
 	if (drv_data->irq < 0) {
-		rc = -ENXIO;
+		rc = drv_data->irq;
 		goto exit_reset;
 	}
 
