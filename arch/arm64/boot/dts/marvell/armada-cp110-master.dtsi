@@ -138,6 +138,18 @@
 				interrupts = <ICU_GRP_NSR 107 IRQ_TYPE_LEVEL_HIGH>;
 				clocks = <&cpm_syscon0 1 15>;
 				status = "disabled";
+				#address-cells = <1>;
+				#size-cells = <0>;
+
+				sata-port@0 {
+					reg = <0>;
+					status = "disabled";
+				};
+
+				sata-port@1 {
+					reg = <1>;
+					status = "disabled";
+				};
 			};
 
 			cpm_usb3_0: usb3@500000 {

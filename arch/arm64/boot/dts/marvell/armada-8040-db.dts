@@ -112,6 +112,14 @@
 /* CON4 on CP0 expansion */
 &cpm_sata0 {
 	status = "okay";
+
+	sata-port@0 {
+		status = "okay";
+	};
+
+	sata-port@1 {
+		status = "okay";
+	};
 };
 
 /* CON9 on CP0 expansion */
@@ -157,6 +165,14 @@
 /* CON4 on CP1 expansion */
 &cps_sata0 {
 	status = "okay";
+
+	sata-port@0 {
+		status = "okay";
+	};
+
+	sata-port@1 {
+		status = "okay";
+	};
 };
 
 /* CON9 on CP1 expansion */

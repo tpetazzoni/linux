@@ -81,12 +81,14 @@ static void mvebu_icu_write_msg(struct msi_desc *desc, struct msi_msg *msg)
 	 * is enabled, if sata node is enabled, both interrupts are
 	 * configured (regardless of which port is actually in use).
 	 */
+#if 1
 	if (d->hwirq == ICU_SATA0_ICU_ID || d->hwirq == ICU_SATA1_ICU_ID) {
 		writel_relaxed(icu_int,
 			       icu->base + ICU_INT_CFG(ICU_SATA0_ICU_ID));
 		writel_relaxed(icu_int,
 			       icu->base + ICU_INT_CFG(ICU_SATA1_ICU_ID));
 	}
+#endif
 }
 
 static int
