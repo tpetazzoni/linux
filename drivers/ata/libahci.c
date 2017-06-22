@@ -2537,6 +2537,9 @@ static int ahci_host_activate_multi_irqs(struct ata_host *host,
 			continue;
 		}
 
+		pr_err("===> %s: %d, request irq %d, port %d (%s)\n",
+		       __func__, __LINE__, irq, i, pp->irq_desc);
+
 		rc = devm_request_irq(host->dev, irq, ahci_multi_irqs_intr_hard,
 				0, pp->irq_desc, host->ports[i]);
 
@@ -2566,6 +2569,7 @@ int ahci_host_activate(struct ata_host *host, struct scsi_host_template *sht)
 	int rc;
 
 	if (hpriv->flags & AHCI_HFLAG_MULTI_MSI) {
+		pr_err("===> %s: %d\n", __func__, __LINE__);
 		if (hpriv->irq_handler)
 			dev_warn(host->dev,
 			         "both AHCI_HFLAG_MULTI_MSI flag set and custom irq handler implemented\n");
