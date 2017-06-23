@@ -135,7 +135,6 @@
 			cpm_sata0: sata@540000 {
 				compatible = "marvell,armada-8k-ahci";
 				reg = <0x540000 0x30000>;
-				interrupts = <ICU_GRP_NSR 107 IRQ_TYPE_LEVEL_HIGH>;
 				clocks = <&cpm_syscon0 1 15>;
 				status = "disabled";
 				#address-cells = <1>;
@@ -144,11 +143,13 @@
 				sata-port@0 {
 					reg = <0>;
 					status = "disabled";
+					interrupts = <ICU_GRP_NSR 109 IRQ_TYPE_LEVEL_HIGH>;
 				};
 
 				sata-port@1 {
 					reg = <1>;
 					status = "disabled";
+					interrupts = <ICU_GRP_NSR 107 IRQ_TYPE_LEVEL_HIGH>;
 				};
 			};
 
