@@ -1893,6 +1893,17 @@ static irqreturn_t ahci_multi_irqs_intr_hard(int irq, void *dev_instance)
 	status = readl(port_mmio + PORT_IRQ_STAT);
 	writel(status, port_mmio + PORT_IRQ_STAT);
 
+	pr_info("=> actual port %p MMIO @ %p, status = 0x%x\n",
+		ap, port_mmio, status);
+
+	{
+		struct ata_host *h = ap->host;
+		ap = h->ports[0];
+		status = readl(port_mmio + PORT_IRQ_STAT);
+		pr_info("=> actual port %p MMIO @ %p, status = 0x%x\n",
+			ap, port_mmio, status);
+	}
+
 	spin_lock(ap->lock);
 	ahci_handle_port_interrupt(ap, port_mmio, status);
 	spin_unlock(ap->lock);
@@ -1947,6 +1958,8 @@ static irqreturn_t ahci_single_level_irq_intr(int irq, void *dev_instance)
 	irq_stat = readl(mmio + HOST_IRQ_STAT);
 	if (!irq_stat)
 		return IRQ_NONE;
+
+	pr_info("Read from mmio = %p, irq_stat = 0x%x\n", mmio, irq_stat);
 
 	irq_masked = irq_stat & hpriv->port_map;
 

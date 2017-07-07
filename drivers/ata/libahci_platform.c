@@ -92,6 +92,8 @@ static void ahci_platform_disable_phys(struct ahci_host_priv *hpriv)
 static int ahci_get_per_port_irq_vector(struct ata_host *host, int port)
 {
 	struct ahci_host_priv *hpriv = host->private_data;
+	pr_info("%s: for ata_host %p, port %d, IRQ %d\n",
+		__func__, host, port, hpriv->irqs[port]);
 	return hpriv->irqs[port];
 }
 
